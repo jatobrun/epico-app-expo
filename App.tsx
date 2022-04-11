@@ -1,18 +1,31 @@
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import React from 'react';
 
-export default function App() {
+import { NavigationContainer } from '@react-navigation/native';
+import { Navigation } from './src/navigation/Navigation';
+
+import { Provider as PaperProvider } from 'react-native-paper';
+import { ThemePaper } from './src/theme/Theme';
+import { AuthProvider } from './src/context/authContext/AuthContext';
+
+const AppState = ({ children }: any) => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
-  );
+    <AuthProvider>
+      { children }
+    </AuthProvider>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const App = () => {
+  return (
+    <PaperProvider theme={ ThemePaper }>
+      <NavigationContainer>
+        <AppState>
+          <Navigation />
+        </AppState>
+      </NavigationContainer>
+    </PaperProvider>
+  )
+}
+
+export default App;
